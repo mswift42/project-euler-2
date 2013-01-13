@@ -68,7 +68,6 @@ card_dic = {'2':0,'3':1,'4':2,'5':3,'6':4,'7':5,'8':6,'9':7,'T':8,'J':9,'Q':10,'
 with open('poker.txt', 'r+') as f:
    for i in f.readlines():
        hands.append(i.split())
-print len(hands)
 
 def royal_flush(hand):
     set_kind = {i[0] for i in hand}
@@ -83,8 +82,6 @@ def strait_flush(hand):
 
 def sort_hand(hand):
     card_dic = {'2':0,'3':1,'4':2,'5':3,'6':4,'7':5,'8':6,'9':7,'T':8,'J':9,'Q':10,'K':11,'A':12 }
-    card_rank = ['2' , '3' , '4' , '5', '6', '7', '8', '9' , 'T', 'J' , 'Q', 'K', 'A']
-    values = sorted(card_dic.iteritems(),key=operator.itemgetter(1))
     valuelist = list(((card_dic[i[0]],i) for i in hand))
     return sorted(valuelist, reverse=True)
     
@@ -131,8 +128,6 @@ def high_card(hand):
     handlist = sort_hand(hand)
     return handlist[0]
 
-ranks = [royal_flush, strait_flush, four_kind, full_house, flush, straight, three_kind,
-         two_pair, one_pair]
 
 def get_score(hand):
     if royal_flush(hand): return 10
