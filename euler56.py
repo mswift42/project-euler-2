@@ -18,4 +18,5 @@ for i in range(10,100):
     for j in range(10,100):
         if sum_digits(pow(i,j)) > max:
             max = sum_digits(pow(i,j))
-print max 
+print max
+
