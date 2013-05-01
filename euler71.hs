@@ -11,5 +11,5 @@ index = (fromJust $ elemIndex (3 % 7) ratiolist) - 1
 
 result = numerator $ ratiolist !! index
 
-main = print result
+main = print result 
 
