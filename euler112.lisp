@@ -1,5 +1,6 @@
 (load "~/quicklisp/setup.lisp")
 (ql:quickload "lisp-unit") 
+(in-package :cl-user)
 
 (lisp-unit:define-test test-nr-to-list
   (lisp-unit:assert-equal '(1 2 3) (number-to-list 123))
@@ -39,7 +40,9 @@
 (defun euler-112 ()
   "return ratio of bouncy to non bouncy numbers."
   (loop
-       for i = 1 then (1+ i)
+       for i from 1
        counting (bouncy-p (number-to-list i)) into sumbouncy
        when (= 99 (* 100 (/ sumbouncy i)))
        return  i))
+
+
