@@ -1,6 +1,10 @@
-(load "~/quicklisp/setup.lisp")
+
 (ql:quickload "lisp-unit") 
-(in-package :cl-user)
+(defpackage :euler-112
+  (:use :cl :lisp-unit))
+
+(in-package :euler-112)
+
 
 (lisp-unit:define-test test-nr-to-list
   (lisp-unit:assert-equal '(1 2 3) (number-to-list 123))
@@ -25,17 +29,34 @@
   (map 'list #'digit-char-p (prin1-to-string num)))
 
 (defun increasing-p (lst)
-  "Check if list of numbers is increasing."
+  "Return if list of numbers is increasing."
   (equal lst (sort (copy-list lst) #'<)))
 
+(defun incr (lst)
+  (cond
+    ((null lst) t)
+    ((null (rest lst)) t)
+    (t (and (<= (first lst) (second lst))
+	    (incr (rest lst))))))
+
+(defun decr (lst)
+  (cond
+    ((null lst) t)
+    ((null (rest lst)) t)
+    (t (and (>= (first lst) (second lst))
+	    (decr (rest lst))))))
+
+;; checking numbers recursively with incr and decr instead of
+;; checking against the sorted lists nearly halves the thime.
+
 (defun decreasing-p (lst)
-  "Check if list of numbers is decreasing."
+  "Return if list of numbers is decreasing."
   (equal lst (sort (copy-list lst) #'>)))
 
 (defun bouncy-p (lst)
-  "Check if list is neither increasing nor decreasing."
-  (and (not ( increasing-p lst))
-       (not ( decreasing-p lst))))
+  "Return if list is neither increasing nor decreasing."
+  (and (not ( incr lst))
+       (not ( decr lst))))
 
 (defun euler-112 ()
   "return ratio of bouncy to non bouncy numbers."
