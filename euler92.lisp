@@ -8,8 +8,8 @@
 
 (defun init-hash ()
   (loop
-       for i from 1 to 600
-     do ( setf ( gethash i *ends-in-hash*) (ends-in i))))
+       for i from 1 to 1000
+       do ( setf ( gethash i *ends-in-hash*) (ends-in i))))
 
 (defun ends-in (n)
   (loop

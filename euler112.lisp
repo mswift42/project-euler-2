@@ -25,45 +25,38 @@
   (lisp-unit:assert-true (bouncy-p '( 4 3 5)))
   (lisp-unit:assert-false (bouncy-p '( 2 3 4))))
 
+
 (defun number-to-list (num)
   (map 'list #'digit-char-p (prin1-to-string num)))
 
 (defun increasing-p (lst)
-  "Return if list of numbers is increasing."
-  (equal lst (sort (copy-list lst) #'<)))
-
-(defun incr (lst)
   (cond
     ((null lst) t)
     ((null (rest lst)) t)
     (t (and (<= (first lst) (second lst))
-	    (incr (rest lst))))))
+	    (increasing-p (rest lst))))))
 
-(defun decr (lst)
+(defun decreasing-p (lst)
   (cond
     ((null lst) t)
     ((null (rest lst)) t)
     (t (and (>= (first lst) (second lst))
-	    (decr (rest lst))))))
+	    (decreasing-p (rest lst))))))
 
 ;; checking numbers recursively with incr and decr instead of
 ;; checking against the sorted lists nearly halves the thime.
 
-(defun decreasing-p (lst)
-  "Return if list of numbers is decreasing."
-  (equal lst (sort (copy-list lst) #'>)))
-
 (defun bouncy-p (lst)
   "Return if list is neither increasing nor decreasing."
-  (and (not ( incr lst))
-       (not ( decr lst))))
+  (and (not ( increasing-p lst))
+       (not ( decreasing-p lst))))
 
 (defun euler-112 ()
   "return ratio of bouncy to non bouncy numbers."
   (loop
-       for i from 1
-       counting (bouncy-p (number-to-list i)) into sumbouncy
-       when (= 99 (* 100 (/ sumbouncy i)))
-       return  i))
+     for i from 1
+     counting (bouncy-p (number-to-list i)) into sumbouncy
+     when (= 99 (* 100 (/ sumbouncy i)))
+     return  i))
 
 
