@@ -44,7 +44,7 @@
 	    (decreasing-p (rest lst))))))
 
 ;; checking numbers recursively with incr and decr instead of
-;; checking against the sorted lists nearly halves the thime.
+;; checking against the sorted lists nearly halves the running time.
 
 (defun bouncy-p (lst)
   "Return if list is neither increasing nor decreasing."
