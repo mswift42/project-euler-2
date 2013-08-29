@@ -23,15 +23,15 @@
   "test if fraction is between 1/3 and 1/2 and by
    including gcd-test for 1 exclude duplicates."
   (let ((frac (/ n d)))
-    (and (> frac (/ 1 3))
-	 (< frac (/ 1 2))
-	 (= 1 (gcd n d)))))
+    (and (< frac (/ 1 2))
+	 (> frac (/ 1 3))
+	  (= 1 (gcd n d)))))
 
-(defun count-fractions ()
-  (loop
-       for n from 1 to 6000
-       collect (loop for d from 1 to 12000
-		    counting (limit-p n d))))
+ (defun count-fractions ()
+   (loop
+	for n from 1 to 6000
+	collect (loop for d from 1 to 12000
+		     counting (limit-p n d))))
 
 (defun euler-73 ()
   (reduce #'+ (count-fractions)))
