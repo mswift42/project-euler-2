@@ -25,33 +25,33 @@ Consider the following five hands dealt to two players:
 Hand	 	Player 1	 	Player 2	 	Winner
 1	 	5H 5C 6S 7S KD
 Pair of Fives
- 	2C 3S 8S 8D TD
+2C 3S 8S 8D TD
 Pair of Eights
- 	Player 2
+Player 2
 2	 	5D 8C 9S JS AC
 Highest card Ace
- 	2C 5C 7D 8S QH
+2C 5C 7D 8S QH
 Highest card Queen
- 	Player 1
+Player 1
 3	 	2D 9C AS AH AC
 Three Aces
- 	3D 6D 7D TD QD
+3D 6D 7D TD QD
 Flush with Diamonds
- 	Player 2
+Player 2
 4	 	4D 6S 9H QH QC
 Pair of Queens
 Highest card Nine
- 	3D 6D 7H QD QS
+3D 6D 7H QD QS
 Pair of Queens
 Highest card Seven
- 	Player 1
+Player 1
 5	 	2H 2D 4C 4D 4S
 Full House
 With Three Fours
- 	3C 3D 3S 9S 9D
+3C 3D 3S 9S 9D
 Full House
 with Three Threes
- 	Player 1
+Player 1
 The file, poker.txt, contains one-thousand random hands dealt to two players. Each line of the file contains ten cards (separated by a single space): the first five are Player 1's cards and the last five are Player 2's cards. You can assume that all hands are valid (no invalid characters or repeated cards), each player's hand is in no specific order, and in each hand there is a clear winner.
 
 How many hands does Player 1 win?"""
@@ -63,11 +63,11 @@ from collections import defaultdict
 
 card_rank = ['2' , '3' , '4' , '5', '6', '7', '8', '9' , 'T', 'J' , 'Q', 'K', 'A']
 card_dic = {'2':0,'3':1,'4':2,'5':3,'6':4,'7':5,'8':6,'9':7,'T':8,'J':9,'Q':10,'K':11,'A':12 }
-    
+
 
 with open('poker.txt', 'r+') as f:
-   for i in f.readlines():
-       hands.append(i.split())
+    for i in f.readlines():
+        hands.append(i.split())
 
 def royal_flush(hand):
     set_kind = {i[0] for i in hand}
@@ -84,8 +84,8 @@ def sort_hand(hand):
     card_dic = {'2':0,'3':1,'4':2,'5':3,'6':4,'7':5,'8':6,'9':7,'T':8,'J':9,'Q':10,'K':11,'A':12 }
     valuelist = list(((card_dic[i[0]],i) for i in hand))
     return sorted(valuelist, reverse=True)
-    
-  
+
+
 def get_sets(hand):
     set_kind = {i[0] for i in hand}
     set_suit = {i[1] for i in hand}
@@ -93,11 +93,11 @@ def get_sets(hand):
 
 def four_kind(hand):
     set_kind, set_suit = get_sets(hand)
-    return len(set_suit) ==4 and len(set_kind) == 2 
+    return len(set_suit) == 4 and len(set_kind) == 2 
     
 def full_house(hand):
     set_kind, set_suit = get_sets(hand)
-    return len(set_kind) ==2 and len(set_suit) >=3
+    return len(set_kind) == 2 and len(set_suit) >=3
 
 def flush(hand):
     set_kind, set_suit = get_sets(hand)
@@ -106,13 +106,13 @@ def flush(hand):
 def straight(hand):
     set_kind, set_suit = get_sets(hand)
     rank = sorted([card_dic[i] for i in set_kind])
-    return len(set_kind)==5 and rank[4] - rank[0] ==4
+    return len(set_kind) == 5 and rank[4] - rank[0] == 4
 
 
 def three_kind(hand):
     set_kind, set_suit = get_sets(hand)
     handlist = [i[0] for i in hand]
-    return len(set_kind) ==3 and 3 in [handlist.count(i) for i in handlist]
+    return len(set_kind) == 3 and 3 in [handlist.count(i) for i in handlist]
 
 def two_pair(hand):
     set_kind, set_suit = get_sets(hand)
@@ -123,8 +123,9 @@ def one_pair(hand):
     set_kind, set_suit = get_sets(hand)
     handlist = [i[0] for i in hand]
     return [handlist.count(i) for i in handlist].count(2)==2 
-    
+
 def high_card(hand):
+    "return high card"
     handlist = sort_hand(hand)
     return handlist[0]
 
@@ -142,7 +143,7 @@ def get_score(hand):
     else:
         return 1
 
-    
+
 count1 = 0
 count2 = 0
 
@@ -154,10 +155,10 @@ for i in hands:
         count1 +=1
     elif get_score(i[:5]) < get_score(i[5:]):
         count2 +=1
-            
-        
-    else:
-        ties.append(i)
+
+
+else:
+    ties.append(i)
 
 
 
@@ -169,14 +170,14 @@ for i in ties:
         onepairlist.append(i)
     elif get_score(i[:5]) ==1:
         highlist.append(i)
-        
+
 for i in highlist:
     if sort_hand(i[:5]) > sort_hand(i[5:]):
         count1 +=1
     elif sort_hand(i[:5]) < sort_hand(i[5:]):
         count2 +=1 
 
-                                                         
+
 for i in onepairlist:
     hand1 = [j[0] for j in i[:5]]
     hand2 = [j[0] for j in i[5:]]
@@ -198,7 +199,7 @@ for i in onepairlist:
         else:
             count2 +=1 
 
-print count1
+print(count1)
 
 
 
